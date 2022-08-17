@@ -12,7 +12,7 @@ function creategalleryItemsMarkUp (items) {
    
    const galleryItems = items.reduce((acc, {original, preview, description}) => { 
     
-    const template = `<li class="gallery__item">
+    const template = `<div class="gallery__item">
     <a class="gallery__link" href="${original}">
       <img
         class="gallery__image"
@@ -21,7 +21,7 @@ function creategalleryItemsMarkUp (items) {
         alt="${description}"
       />
     </a>
-  </li>`
+  </div>`
     return acc += template}, '')
     
     galleryListContainer.innerHTML = galleryItems
