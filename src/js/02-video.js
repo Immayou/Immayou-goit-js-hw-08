@@ -9,21 +9,15 @@ console.log('played the video!');
 });
 
 const onPlay = function({seconds}) {
-   {
-    localStorage.setItem('videoplayer-current-time', seconds)   //  localStorage.getItem("videoplayer-current-time", seconds)
-    }
+    localStorage.setItem('videoplayer-current-time', seconds)
 };
 
-player.on('timeupdate', onPlay);
+player.on('timeupdate', throttle(onPlay, 1000));
 
 const timeAfterUpdate = localStorage.getItem('videoplayer-current-time')
 
-player.setCurrentTime(timeAfterUpdate).then(function(seconds) {
-}).catch(function(error) {
-    switch (error.name) {
-        case 'RangeError':
-            break;
-        default:
-            break;
-    }
+player
+.setCurrentTime(timeAfterUpdate)
+.catch(function(error) {
+    return
 });
