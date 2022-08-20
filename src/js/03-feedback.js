@@ -8,7 +8,9 @@ const LOCAL_STORAGE_KEY = 'feedback-form-state';
 feedbackForm.addEventListener('input', throttle(onTextareaInput, 500))
 feedbackForm.addEventListener('submit', onFormSubmit)
 
-inputPushSavedTextareaMassage ()
+let inputValues = {}
+
+initTextareaMassage ();
 
 function onFormSubmit (evt) {
    evt.preventDefault();
@@ -18,18 +20,19 @@ function onFormSubmit (evt) {
 }
 
 function onTextareaInput (evt) {
+   inputValues[evt.target.name] = evt.target.value
    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(
       {email: userEmail.value, 
       message: userFeedbackMessage.value}))
 }
 
-function inputPushSavedTextareaMassage () {
-   const unParsedLocalStorageValue = localStorage.getItem(LOCAL_STORAGE_KEY)
+function initTextareaMassage () {
+   let savedLocalStorageValue = localStorage.getItem(LOCAL_STORAGE_KEY)
    
-   if (unParsedLocalStorageValue) {
-   const parsedLocalStorageValue = JSON.parse(unParsedLocalStorageValue)
-   userEmail.value = parsedLocalStorageValue.email;
-   userFeedbackMessage.value = parsedLocalStorageValue.message;
+   if (savedLocalStorageValue) {
+   savedLocalStorageValue = JSON.parse(savedLocalStorageValue)
+   userEmail.value = savedLocalStorageValue.email;
+   userFeedbackMessage.value = savedLocalStorageValue.message;
    }
 }
   
