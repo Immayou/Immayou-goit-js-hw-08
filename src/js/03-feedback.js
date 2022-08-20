@@ -1,8 +1,6 @@
 import throttle from 'lodash.throttle';
 
 const feedbackForm = document.querySelector('.feedback-form');
-const userEmail = document.querySelector('.feedback-form input');
-const userFeedbackMessage = document.querySelector('.feedback-form textarea');
 const LOCAL_STORAGE_KEY = 'feedback-form-state';
 
 feedbackForm.addEventListener('input', throttle(onEmailTextareaInput, 500))
@@ -14,16 +12,14 @@ initEmailTextareaMassage ();
 
 function onFormSubmit (evt) {
    evt.preventDefault();
-   console.log({ email: userEmail.value, message: userFeedbackMessage.value });
+   console.log(inputValues);
    evt.target.reset();
    localStorage.removeItem(LOCAL_STORAGE_KEY);
 }
 
 function onEmailTextareaInput (evt) {
    inputValues[evt.target.name] = evt.target.value
-   localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(
-      {email: userEmail.value, 
-      message: userFeedbackMessage.value}))
+   localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(inputValues))
 }
 
 function initEmailTextareaMassage () {
@@ -31,8 +27,9 @@ function initEmailTextareaMassage () {
    
    if (savedLocalStorageValue) {
    savedLocalStorageValue = JSON.parse(savedLocalStorageValue)
-   userEmail.value = savedLocalStorageValue.email;
-   userFeedbackMessage.value = savedLocalStorageValue.message;
+   Object.entries(savedLocalStorageValue).forEach(([name, value]) => 
+   {inputValues[name] = value
+   feedbackForm.elements[name].value = value})
    }
 }
   
