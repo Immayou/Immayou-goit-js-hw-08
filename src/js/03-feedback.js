@@ -6,7 +6,7 @@ const LOCAL_STORAGE_KEY = 'feedback-form-state';
 feedbackForm.addEventListener('input', throttle(onEmailTextareaInput, 500))
 feedbackForm.addEventListener('submit', onFormSubmit)
 
-let inputValues = {}
+let inputValues = {};
 
 initEmailTextareaMassage ();
 
@@ -14,6 +14,7 @@ function onFormSubmit (evt) {
    evt.preventDefault();
    console.log(inputValues);
    evt.target.reset();
+   inputValues = {};
    localStorage.removeItem(LOCAL_STORAGE_KEY);
 }
 
